@@ -1,6 +1,6 @@
 module TestArraySubtraction where
 
-import Lib
+import ArraySubtraction
 import Test.HUnit
 
 arraySubtractionTests = [

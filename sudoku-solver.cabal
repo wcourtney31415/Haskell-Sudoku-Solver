@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ecf74ad98bbeeec382a4a4a7c0c41af289440bf9a29e69e61bf8a280655059e8
+-- hash: 3be718517ee2efc72479707817e48c350b2052db38608bef9bf57cdfdb0fba33
 
 name:           sudoku-solver
 version:        0.1.0.0
@@ -27,6 +27,7 @@ source-repository head
 
 library
   exposed-modules:
+      ArraySubtraction
       Lib
   other-modules:
       Paths_sudoku_solver
