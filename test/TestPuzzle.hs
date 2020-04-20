@@ -2,17 +2,15 @@ module TestPuzzle where
 
 import Puzzle
 import Test.HUnit
+import CustomTestHelpers
 
-puzzleTests = [
-  TestLabel
-    "No Negative Cells"
-    seedWithNegative
-  , TestLabel
-    "Invalid Row Count"
-    incorrectNumOfRows
-  , TestLabel
-    "Invalid Cell Count"
-    correctCellCount
+testFile = "TestPuzzle.hs"
+
+puzzleTests = map (toTestLabel testFile)
+  [
+    ("No Negative Cells", seedWithNegative)
+    , ("Invalid Row Count", incorrectNumOfRows)
+    , ("Invalid Cell Count", correctCellCount)
   ]
 
 validPuzzleSeed =
@@ -67,6 +65,8 @@ seedWithNegative =
   "No Negative Cells"
   ((toPuzzle invalidPuzzleSeed) == invalidPuzzleSeed)
   False
+
+
 
 correctCellCount =
   let

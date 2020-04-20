@@ -2,18 +2,19 @@ module TestArraySubtraction where
 
 import ArraySubtraction
 import Test.HUnit
+import CustomTestHelpers
 
-arraySubtractionTests = [
-  TestLabel "Array Subtraction" testArraySubtraction
-  , TestLabel
-    "Array Subtraction: empty target list"
-    testArraySubtractionBlankTargets
-  , TestLabel
-    "Array Subtraction: Empty target list, and duplicate elements."
-    arrSubBlankTargetsDupElem
-  , TestLabel
-    "Array Subtraction: Empty Source List."
-    arrSubBlankSourceArr
+testFile = "TestArraySubtraction"
+
+arraySubtractionTests = map (toTestLabel testFile) [
+    ("Array Subtraction" ,
+      testArraySubtraction)
+  , ("Array Subtraction: empty target list",
+      testArraySubtractionBlankTargets)
+  , ("Array Subtraction: Empty target list, and duplicate elements.",
+      arrSubBlankTargetsDupElem)
+  , ("Array Subtraction: Empty Source List.",
+      arrSubBlankSourceArr)
   ]
 
 -- Tests --

@@ -7,7 +7,6 @@ toPuzzle puzzleSeed =
   $ negativeFilter
   $ puzzleSeed
 
-
 negativeFilter puzzleSeed =
   let
     flatArr = concat puzzleSeed
