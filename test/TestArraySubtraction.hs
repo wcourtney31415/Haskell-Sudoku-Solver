@@ -1,12 +1,13 @@
-module TestArraySubtraction where
+module TestArraySubtraction (arraySubtractionTests) where
 
 import ArraySubtraction
 import Test.HUnit
 import CustomTestHelpers
 
-testFile = "TestArraySubtraction"
+arraySubtractionTests = prepTests "TestArraySubtraction" tests
 
-arraySubtractionTests = map (toTestLabel testFile) [
+tests =
+  [
     ("Array Subtraction" ,
       testArraySubtraction)
   , ("Array Subtraction: empty target list",

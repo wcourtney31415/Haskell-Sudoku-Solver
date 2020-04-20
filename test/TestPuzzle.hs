@@ -1,16 +1,15 @@
-module TestPuzzle where
+module TestPuzzle (puzzleTests) where
 
 import Puzzle
 import Test.HUnit
 import CustomTestHelpers
 
-testFile = "TestPuzzle.hs"
+puzzleTests = prepTests "TestPuzzle.hs" tests
 
-puzzleTests = map (toTestLabel testFile)
-  [
-    ("No Negative Cells", seedWithNegative)
-    , ("Invalid Row Count", incorrectNumOfRows)
-    , ("Invalid Cell Count", correctCellCount)
+tests = [
+  ("No Negative Cells", seedWithNegative)
+  , ("Invalid Row Count", incorrectNumOfRows)
+  , ("Invalid Cell Count", correctCellCount)
   ]
 
 validPuzzleSeed =

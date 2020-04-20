@@ -8,3 +8,6 @@ toTestLabel fileName tup =
     test = snd tup
   in
     TestLabel title test
+
+prepTests fileName tests =
+  map (toTestLabel fileName) tests
