@@ -38,10 +38,10 @@ incorrectNumOfRows =
         , [8,0,0, 0,6,0, 0,0,3]
       ]
   in
-  TestCase $ assertEqual
+  TestCase $ assertUnequal
   "Invalid row count"
-  ((toPuzzle invalidPuzzleSeed) == invalidPuzzleSeed)
-  False
+  (toPuzzle invalidPuzzleSeed)
+  invalidPuzzleSeed
 
 seedWithNegative =
   let
@@ -60,10 +60,10 @@ seedWithNegative =
         , [0,0,0, 0,8,0, 0,7,9]
       ]
   in
-  TestCase $ assertEqual
+  TestCase $ assertUnequal
   "No Negative Cells"
-  ((toPuzzle invalidPuzzleSeed) == invalidPuzzleSeed)
-  False
+  (toPuzzle invalidPuzzleSeed)
+  invalidPuzzleSeed
 
 
 
@@ -85,7 +85,7 @@ correctCellCount =
         , [0,0,0, 0,8,0, 0,7,9]
       ]
   in
-  TestCase $ assertEqual
+  TestCase $ assertUnequal
   "Incorrect Number of Cells"
-  ((toPuzzle invalidPuzzleSeed) == invalidPuzzleSeed)
-  False
+  (toPuzzle invalidPuzzleSeed)
+  invalidPuzzleSeed

@@ -11,3 +11,7 @@ toTestLabel fileName tup =
 
 prepTests fileName tests =
   map (toTestLabel fileName) tests
+
+
+assertUnequal text valueA valueB =
+  assertEqual text (valueA /= valueB) True
