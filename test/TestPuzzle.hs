@@ -6,7 +6,7 @@ import CustomTestHelpers
 
 puzzleTests = prepTests "TestPuzzle.hs" tests
 
-tests = []
+tests = [("Test making a puzzle",testToPuzzle)]
 
 validPuzzleSeed =
   [
@@ -23,15 +23,8 @@ validPuzzleSeed =
     , [0,0,0, 0,8,0, 0,7,9]
   ]
 
-makePuzzle =
-  let
-    invalidPuzzleSeed =
-      [
-        [5,3,0, 0,7,0, 0,0,0]
-        , [6,0,0, 1,9,5, 0,0,0]
-        , [0,9,8, 0,0,0, 0,6,0]
-        --
-        , [8,0,0, 0,6,0, 0,0,3]
-      ]
-  in
-  TestCase $ assertFailure "bloop"
+testToPuzzle =
+  TestCase $ assertEqual
+    "Test if valid input returns a puzzle"
+    (toPuzzle validPuzzleSeed)
+    validPuzzleSeed
