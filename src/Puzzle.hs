@@ -8,8 +8,17 @@ toPuzzle arr =
         False
       else
         True
-    isValid =
-      hasValidRowCount
+    hasValidColumnCount arr =
+      let
+        listOfLengths = map length arr
+        listOfNonNine = filter (/=9) listOfLengths
+      in
+        if length listOfNonNine > 0 then
+          False
+        else
+          True
+    isValid arr =
+      hasValidRowCount arr && hasValidColumnCount arr
   in
   if isValid arr then
     Just arr

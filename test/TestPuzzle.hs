@@ -8,8 +8,14 @@ puzzleTests = prepTests "TestPuzzle.hs" tests
 
 tests =
   [
-    ("Test making a puzzle",testToPuzzle)
-    , ("Test excessive rows returns nothing", testExcessiveRows)
+    ("Test making a puzzle"
+      ,testToPuzzle)
+    , ("Test excessive rows returns nothing"
+      , testExcessiveRows)
+    , ("Test that nothing is returned on bad row count"
+      , testReturnNothingOnBadRowCount)
+    , ("Test that nothing is returned on bad column count"
+      , testReturnNothingOnBadColumnCount)
   ]
 
 validPuzzleSeed =
@@ -78,5 +84,27 @@ testReturnNothingOnBadRowCount =
       ]
   in
   TestCase $ assertBool
-  "Test that nothing is returned upon recieving a bad row count."
+  "Invalid row count should have returned Nothing."
   (isNothing $ toPuzzle badRowCount)
+
+
+testReturnNothingOnBadColumnCount =
+  let
+    badColumnCount=
+      [
+        [5,3,0, 0,7,0, 0,0,0]
+        , [6,0,0, 1,9,5, 0,0,0]
+        , [0,9,8, 0,0,0, 0,6,0]
+        --
+        , [8,0,0, 0,6,0, 0,0,3]
+        , [4,0,0, 8,0,3, 0,0,1]
+        , [7,0,0, 0,2,0, 0,0,6]
+        --
+        , [0,6,0, 0,0,0, 2,8,0]
+        , [0,0,0, 4,1,9, 0,0,5, 5]
+        , [0,0,0, 0,8,0, 0,7,9]
+      ]
+  in
+  TestCase $ assertBool
+  "Invalid column count should have returned Nothing."
+  (isNothing $ toPuzzle badColumnCount)
