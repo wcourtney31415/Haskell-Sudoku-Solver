@@ -43,3 +43,11 @@ toPuzzle arr =
     Just arr
   else
     Nothing
+
+getRow x arr = arr !! x
+
+getColumn x arr =
+  let
+    column = map (!!x) arr
+  in
+    column

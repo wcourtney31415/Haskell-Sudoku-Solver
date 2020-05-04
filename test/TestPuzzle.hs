@@ -18,6 +18,10 @@ tests =
       , testReturnNothingOnBadColumnCount)
     , ("Puzzle Creation: Input with elements out of range 0..9"
       , testThatEachElementIsZeroToNine)
+    , ("Puzzle: getRow returns the correct value."
+      , testGetRow)
+    , ("Puzzle: getColumn returns the correct value."
+      , testGetColumn)
   ]
 
 validPuzzleSeed =
@@ -34,6 +38,19 @@ validPuzzleSeed =
     , [0,0,0, 4,1,9, 0,0,5]
     , [0,0,0, 0,8,0, 0,7,9]
   ]
+
+testGetColumn =
+  TestCase $ assertEqual
+  "Retrieved something other than the correct column."
+  [3,0,9,0,0,0,6,0,0]
+  (getColumn 1 validPuzzleSeed)
+
+testGetRow =
+  TestCase $ assertEqual
+  "Retrieved something other than the correct row."
+  [8,0,0, 0,6,0, 0,0,3]
+  (getRow 3 validPuzzleSeed)
+
 
 testMakePuzzleWithValidInput =
   TestCase $ assertEqual
