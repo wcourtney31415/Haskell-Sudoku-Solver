@@ -8,14 +8,16 @@ puzzleTests = prepTests "TestPuzzle.hs" tests
 
 tests =
   [
-    ("Test making a puzzle"
-      ,testToPuzzle)
-    , ("Test excessive rows returns nothing"
+    ("Puzzle Creation: With Valid Input"
+      ,testMakePuzzleWithValidInput)
+    , ("Puzzle Creation: Input with too many Rows"
       , testExcessiveRows)
-    , ("Test that nothing is returned on bad row count"
+    , ("Puzzle Creation: Input with bad row count."
       , testReturnNothingOnBadRowCount)
-    , ("Test that nothing is returned on bad column count"
+    , ("Puzzle Creation: Input with bad column count."
       , testReturnNothingOnBadColumnCount)
+    , ("Puzzle Creation: Input with elements out of range 0..9"
+      , testThatEachElementIsZeroToNine)
   ]
 
 validPuzzleSeed =
@@ -33,9 +35,9 @@ validPuzzleSeed =
     , [0,0,0, 0,8,0, 0,7,9]
   ]
 
-testToPuzzle =
+testMakePuzzleWithValidInput =
   TestCase $ assertEqual
-    "Test if valid input returns a puzzle"
+    "Given that the input is valid, it should have returned a puzzle."
     (toPuzzle validPuzzleSeed)
     (Just validPuzzleSeed)
 
@@ -62,7 +64,7 @@ testExcessiveRows =
       ]
   in
   TestCase $ assertBool
-  "Test that you can't have a puzzle with more than 9 rows"
+  "Too many rows should have returned Nothing."
   (isNothing $ toPuzzle excessiveRows)
 
 testReturnNothingOnBadRowCount =
@@ -108,3 +110,24 @@ testReturnNothingOnBadColumnCount =
   TestCase $ assertBool
   "Invalid column count should have returned Nothing."
   (isNothing $ toPuzzle badColumnCount)
+
+testThatEachElementIsZeroToNine =
+  let
+    elementsOutOfBounds =
+      [
+        [5,3,0, 0,7,0, 0,0,0]
+        , [6,0,0, 1,9,5, 0,0,0]
+        , [0,9,8, 0,0,0, 0,6,0]
+        --
+        , [8,0,0, 0,6,0, 0,0,3]
+        , [4,0,0, 8,0,3, 12,0,1]
+        , [7,0,0, 0,2,0, 0,0,6]
+        --
+        , [0,6,0, 0,0,0, 2,8,0]
+        , [0,0,0, 4,1,9, 0,0,5]
+        , [0,0,0, 0,8,0, 0,7,9]
+      ]
+  in
+  TestCase $ assertBool
+  "Input containing elements not within 0..9 should have returned Nothing."
+  (isNothing $ toPuzzle elementsOutOfBounds)
