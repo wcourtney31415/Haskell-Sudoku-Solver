@@ -22,6 +22,8 @@ tests =
       , testGetRow)
     , ("Puzzle: getColumn returns the correct value."
       , testGetColumn)
+    , ("Puzzle: getBox returns the correct value"
+      , testGetBox)
   ]
 
 validPuzzleSeed =
@@ -38,6 +40,12 @@ validPuzzleSeed =
     , [0,0,0, 4,1,9, 0,0,5]
     , [0,0,0, 0,8,0, 0,7,9]
   ]
+
+testGetBox =
+  TestCase $ assertEqual
+  "Retrieved something other than the correct box."
+  []
+  (getBox 5 8 validPuzzleSeed)
 
 testGetColumn =
   TestCase $ assertEqual
