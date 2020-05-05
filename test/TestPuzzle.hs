@@ -3,6 +3,7 @@ module TestPuzzle (puzzleTests) where
 import Puzzle
 import Test.HUnit
 import CustomTestHelpers
+import Data.List
 
 puzzleTests = prepTests "TestPuzzle.hs" tests
 
@@ -44,8 +45,8 @@ validPuzzleSeed =
 testGetBox =
   TestCase $ assertEqual
   "Retrieved something other than the correct box."
-  []
-  (getBox 5 8 validPuzzleSeed)
+  (sort [0,0,0,4,1,9,0,8,0])
+  (sort $ getBox (5,8) validPuzzleSeed)
 
 testGetColumn =
   TestCase $ assertEqual
