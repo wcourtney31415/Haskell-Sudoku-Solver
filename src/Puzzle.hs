@@ -2,63 +2,59 @@ module Puzzle where
 
 type Puzzle = [[Int]]
 type Coordinate = (Int, Int)
+type Row = [Int]
+type Column = [Int]
+type Box = [Int]
+type Cell = Int
 
 toPuzzle :: Puzzle -> Maybe Puzzle
-toPuzzle arr =
+toPuzzle puzzle =
   let
 
-    elementsInValidRange arr =
+    elementsInValidRange :: Puzzle -> Bool
+    elementsInValidRange puzzle =
       let
-        listOfElements = foldl (++) [] arr
+        listOfElements = foldl (++) [] puzzle
         isInRange x = x `elem` [0..9]
         validElements = filter isInRange listOfElements
         elementCount = length listOfElements
         validElementCount = length validElements
-        isValid =
-          if validElementCount < elementCount then
-            False
-          else
-            True
+        validity = not $ validElementCount < elementCount
       in
-        isValid
+        validity
 
-    hasValidRowCount arr =
-      if length arr /= 9 then
-        False
-      else
-        True
+    hasValidRowCount :: Puzzle -> Bool
+    hasValidRowCount puzzle =
+      length puzzle == 9
 
-    hasValidColumnCount arr =
+    hasValidColumnCount :: Puzzle -> Bool
+    hasValidColumnCount puzzle =
       let
-        listOfLengths = map length arr
+        listOfLengths = map length puzzle
         listOfNonNine = filter (/=9) listOfLengths
+        validity = not $ length listOfNonNine > 0
       in
-        if length listOfNonNine > 0 then
-          False
-        else
-          True
+        validity
 
-    isValid arr =
-      hasValidRowCount arr && hasValidColumnCount arr && elementsInValidRange arr
+    isValid  :: Puzzle -> Bool
+    isValid puzzle =
+      hasValidRowCount puzzle
+      && hasValidColumnCount puzzle
+      && elementsInValidRange puzzle
 
+    maybePuzzle = if' (isValid puzzle) (Just puzzle) Nothing
   in
-  if isValid arr then
-    Just arr
-  else
-    Nothing
-
-getRow x arr = arr !! x
-
-getColumn x arr =
-  let
-    column = map (!!x) arr
-  in
-    column
+  maybePuzzle
 
 
+getRow :: Int -> Puzzle -> Row
+getRow x puzzle = puzzle !! x
 
-getBox :: Coordinate -> Puzzle -> [Int]
-getBox a arr =
+getColumn :: Int -> Puzzle -> Column
+getColumn x puzzle = map (!!x) puzzle
+
+getBox :: Coordinate -> Puzzle -> Box
+getBox a puzzle =
   let
     originX = fst $ getBoxOrigin a
     originY = snd $ getBoxOrigin a
@@ -67,34 +63,39 @@ getBox a arr =
     xRange = [originX..endingX]
     yRange = [originY..endingY]
 
-    --Internal Functions
     getBoxOrigin :: Coordinate -> Coordinate
     getBoxOrigin coordinate =
       let
-        axisBoxOrigin a =
-          if a `mod` 3 == 0 then
-            a
-          else
-            axisBoxOrigin (a - 1)
         x = fst coordinate
         originX = axisBoxOrigin x
         y = snd coordinate
         originY = axisBoxOrigin y
+
+        axisBoxOrigin :: Int -> Int
+        axisBoxOrigin coord =
+          if' (coord `mod` 3 == 0)
+            coord
+            (axisBoxOrigin (coord - 1))
       in
-        (originX,originY)
+        (originX, originY)
 
     getCell :: Coordinate -> Puzzle -> Int
-    getCell a arr =
+    getCell a puzzle =
       let
         x = fst a
         y = snd a
-        row = arr !! y
+        row = puzzle !! y
         cell = row !! x
       in
         cell
-  in
-  [getCell (x,y) arr | x <- xRange, y <- yRange]
 
+    result = [getCell (x,y) puzzle | x <- xRange, y <- yRange]
+  in
+  result
+
+if' :: Bool -> a -> a -> a
+if' True x _ = x
+if' False _ y = y
 
 --For Repl convenience.
 {-
