@@ -1,5 +1,7 @@
 module Puzzle where
 
+import Data.List
+
 type Puzzle = [[Int]]
 type Coordinate = (Int, Int)
 type Row = [Int]
@@ -46,6 +48,9 @@ toPuzzle puzzle =
   in
   maybePuzzle
 
+getPossibilities :: Row -> Column -> Box -> [Int]
+getPossibilities row column box =
+  [1..9] \\ (row ++ column ++ box)
 
 getRow :: Int -> Puzzle -> Row
 getRow x puzzle = puzzle !! x

@@ -23,8 +23,12 @@ tests =
       , testGetRow)
     , ("Puzzle: getColumn returns the correct value."
       , testGetColumn)
-    , ("Puzzle: getBox returns the correct value"
+    , ("Puzzle: getBox returns the correct value."
       , testGetBox)
+    , ("Puzzle: getBox returns exactly 9 Ints."
+      , testGetBoxCount)
+    , ("Puzzle: getPossibilities returns only valid possibilities."
+      , testGetPossibilites)
   ]
 
 validPuzzleSeed =
@@ -47,6 +51,20 @@ testGetBox =
   "Retrieved something other than the correct box."
   (sort [0,0,0,4,1,9,0,8,0])
   (sort $ getBox (5,8) validPuzzleSeed)
+
+testGetBoxCount =
+  let
+    elementCount = length $ getBox (2,7) validPuzzleSeed
+  in
+  TestCase $ assertBool
+  ("This should have returned an array of exactly 9 integers, but instead returned " ++ (show elementCount) ++ " elements.")
+  (elementCount == 9)
+
+testGetPossibilites =
+  TestCase $ assertEqual
+  "Failed"
+  (getPossibilities [4,6,8] [2,4,3] [3,1])
+  [5,7,9]
 
 testGetColumn =
   TestCase $ assertEqual
