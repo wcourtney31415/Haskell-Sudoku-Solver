@@ -29,6 +29,10 @@ tests =
       , testGetBoxCount)
     , ("Puzzle: getPossibilities returns only valid possibilities."
       , testGetPossibilites)
+    , ("Puzzle: solveCell returns correct value."
+      , testSolveCell)
+    , ("Puzzle: solveCell returns nothing"
+      , testSolveCellReturnsNothing)
   ]
 
 validPuzzleSeed =
@@ -45,6 +49,18 @@ validPuzzleSeed =
     , [0,0,0, 4,1,9, 0,0,5]
     , [0,0,0, 0,8,0, 0,7,9]
   ]
+
+testSolveCell =
+  TestCase $ assertEqual
+  "Returned something other than 4."
+  (solveCell (8,8) validPuzzleSeed)
+  (Just 4)
+
+testSolveCellReturnsNothing =
+  TestCase $ assertEqual
+  "Should have returned Nothing."
+  (solveCell (4,6) validPuzzleSeed)
+  Nothing
 
 testGetBox =
   TestCase $ assertEqual
