@@ -9,6 +9,21 @@ type Column = [Int]
 type Box = [Int]
 type Cell = Int
 
+solvePuzzle :: Puzzle -> Puzzle
+solvePuzzle puzzle =
+  let
+    solvables = getSolvables puzzle
+    replace :: Puzzle -> (Int, Int, Int) -> Puzzle
+    replace arr (row,column,val) = fillCell (row,column) val puzzle
+    updated :: Puzzle
+    updated = foldl replace puzzle solvables
+  in
+    if updated == puzzle then
+      updated
+    else
+      solvePuzzle updated
+
+
 fillCell :: RowColumnPair -> Int -> Puzzle -> Puzzle
 fillCell (rowNumber, columnNumber) val puzzle =
   let
@@ -125,7 +140,9 @@ getSolvables arr =
   cellIsZero row column =
     0 == getCell (row, column) arr
   range = [0..8]
-  makeTuple row column = (row,column, solveCell (row, column) arr)
+  handleIt (Just a) = a
+  handleIt Nothing = 0
+  makeTuple row column = (row,column, handleIt $ solveCell (row, column) arr)
   in
   [makeTuple r c | r <- range, c <- range, solveCell (r, c) arr /= Nothing, cellIsZero r c]
 

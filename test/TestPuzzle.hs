@@ -41,6 +41,8 @@ tests =
     --  ,testSolvePuzzle)
     , ("Puzzle: testFillCell successfully populates cell."
       , testFillCell)
+    , ("Puzzle: testFillCell successfully populates cell."
+      ,testSolvePuzzle2)
   ]
 
 validPuzzleSeed =
@@ -57,6 +59,60 @@ validPuzzleSeed =
     , [0,0,0, 4,1,9, 0,0,5]
     , [0,0,0, 0,8,0, 0,7,9]
   ]
+
+
+
+testSolvePuzzle =
+  let
+    solvedPuzzle =
+      [
+        [5,3,4,6,7,8,9,1,2]
+        , [6,7,2,1,9,5,3,4,8]
+        , [1,9,8,3,4,2,5,6,7]
+        , [8,5,9,7,6,1,4,2,3]
+        , [4,2,6,8,5,3,7,9,1]
+        , [7,1,3,9,2,4,8,5,6]
+        , [9,6,1,5,3,7,2,8,4]
+        , [2,8,7,4,1,9,6,3,5]
+        , [3,4,5,2,8,6,1,7,9]
+      ]
+  in
+  TestCase $ assertEqual
+  "Failed to solve the puzzle."
+  solvedPuzzle
+  (solvePuzzle validPuzzleSeed)
+
+testSolvePuzzle2 =
+  let
+    validSeed =
+      [
+        [3,0,0,8,0,1,0,0,2]
+        , [2,0,1,0,3,0,6,0,4]
+        , [0,0,0,2,0,4,0,0,0]
+        , [8,0,9,0,0,0,1,0,6]
+        , [0,6,0,0,0,0,0,5,0]
+        , [7,0,2,0,0,0,4,0,9]
+        , [0,0,0,5,0,9,0,0,0]
+        , [9,0,4,0,8,0,7,0,5]
+        , [6,0,0,1,0,7,0,0,3]
+      ]
+    solvedPuzzle =
+      [
+        [3,4,6,8,9,1,5,7,2]
+        , [2,9,1,7,3,5,6,8,4]
+        , [5,7,8,2,6,4,3,9,1]
+        , [8,5,9,4,7,3,1,2,6]
+        , [4,6,3,9,1,2,8,5,7]
+        , [7,1,2,6,5,8,4,3,9]
+        , [1,3,7,5,4,9,2,6,8]
+        , [9,2,4,3,8,6,7,1,5]
+        , [6,8,5,1,2,7,9,4,3]
+      ]
+  in
+  TestCase $ assertEqual
+  "Failed to solve the puzzle."
+  solvedPuzzle
+  (solvePuzzle validSeed)
 
 testFillCell =
   let
@@ -84,7 +140,7 @@ testFillCell =
 testGetSolvables =
   TestCase $ assertEqual
   "Returned something other than the cells that are currently solvable."
-  [(4,4,Just 5),(6,5,Just 7),(6,8,Just 4),(7,7,Just 3)]
+  [(4,4,5),(6,5,7),(6,8,4),(7,7,3)]
   (getSolvables validPuzzleSeed)
 
 testGetBoxOrigin =
