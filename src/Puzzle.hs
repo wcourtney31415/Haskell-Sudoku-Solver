@@ -9,6 +9,21 @@ type Column = [Int]
 type Box = [Int]
 type Cell = Int
 
+fillCell :: RowColumnPair -> Int -> Puzzle -> Puzzle
+fillCell (rowNumber, columnNumber) val puzzle =
+  let
+    spl = splitAt rowNumber puzzle
+    rowsAbove = fst spl
+    focusRow = head $ snd spl
+    splTwo = splitAt columnNumber focusRow
+    elementsBefore = fst splTwo
+    elementsAfter = tail $ snd splTwo
+    rowsBelow = tail $ snd spl
+    newRow = elementsBefore ++ [val] ++ elementsAfter
+    newPuzzle = rowsAbove ++ [newRow] ++ rowsBelow
+  in
+    newPuzzle
+
 elementsInValidRange :: Puzzle -> Bool
 elementsInValidRange puzzle =
   let
