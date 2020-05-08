@@ -31,8 +31,12 @@ tests =
       , testGetPossibilites)
     , ("Puzzle: solveCell returns correct value."
       , testSolveCell)
-    , ("Puzzle: solveCell returns nothing"
+    , ("Puzzle: solveCell returns nothing."
       , testSolveCellReturnsNothing)
+    , ("Puzzle: getboxOrigin returns correct row column pair."
+      , testGetBoxOrigin)
+    , ("Puzzle: getSolvables returns list of solvable cells"
+      , testGetSolvables)
   ]
 
 validPuzzleSeed =
@@ -50,6 +54,24 @@ validPuzzleSeed =
     , [0,0,0, 0,8,0, 0,7,9]
   ]
 
+testGetSolvables =
+  TestCase $ assertEqual
+  "Returned something other than the cells that are currently solvable."
+  [(4,4,Just 5),(6,5,Just 7),(6,8,Just 4),(7,7,Just 3)]
+  (getSolvables validPuzzleSeed)
+
+testGetBoxOrigin =
+  TestCase $ assertEqual
+  "Returned something other than the box origin"
+  (3,6)
+  (getBoxOrigin (4, 7))
+
+testGetCell =
+  TestCase $ assertEqual
+  "Returned something other than the correct cell."
+  (getCell (2,7) validPuzzleSeed)
+  6
+
 testSolveCell =
   TestCase $ assertEqual
   "Returned something other than 4."
@@ -65,7 +87,7 @@ testSolveCellReturnsNothing =
 testGetBox =
   TestCase $ assertEqual
   "Retrieved something other than the correct box."
-  (sort [0,0,0,4,1,9,0,8,0])
+  (sort [0,0,0,0,0,0,1,3,6])
   (sort $ getBox (5,8) validPuzzleSeed)
 
 testGetBoxCount =
