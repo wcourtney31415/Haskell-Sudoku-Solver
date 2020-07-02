@@ -178,7 +178,7 @@ testGetBoxCount =
     elementCount = length $ getBox (2,7) validPuzzleSeed
   in
   TestCase $ assertBool
-  ("This should have returned an array of exactly 9 integers, but instead returned " ++ (show elementCount) ++ " elements.")
+  ("This should have returned an array of exactly 9 integers, but instead returned " ++ show elementCount ++ " elements.")
   (elementCount == 9)
 
 testGetPossibilites =

@@ -4,4 +4,4 @@ import TestPuzzle
 main :: IO Counts
 main = runTestTT tests
 
-tests = TestList $ puzzleTests
+tests = TestList puzzleTests

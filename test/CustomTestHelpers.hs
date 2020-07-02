@@ -4,13 +4,13 @@ import Test.HUnit
 
 toTestLabel fileName tup =
   let
-    title = fileName ++ " : " ++ (fst tup)
+    title = fileName ++ " : " ++ fst tup
     test = snd tup
   in
     TestLabel title test
 
-prepTests fileName tests =
-  map (toTestLabel fileName) tests
+prepTests fileName =
+  map (toTestLabel fileName)
 
 
 assertUnequal text valueA valueB =

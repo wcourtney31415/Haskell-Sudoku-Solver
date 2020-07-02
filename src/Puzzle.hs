@@ -1,6 +1,7 @@
 module Puzzle where
 
 import Data.List
+import Data.Maybe
 
 type Puzzle = [[Int]]
 type RowColumnPair = (Int, Int)
@@ -42,12 +43,12 @@ fillCell (rowNumber, columnNumber) val puzzle =
 elementsInValidRange :: Puzzle -> Bool
 elementsInValidRange puzzle =
   let
-  listOfElements = foldl (++) [] puzzle
+  listOfElements = concat puzzle
   isInRange x = x `elem` [0..9]
   validElements = filter isInRange listOfElements
   elementCount = length listOfElements
   validElementCount = length validElements
-  validity = not $ validElementCount < elementCount
+  validity = (validElementCount >= elementCount)
   in
   validity
 
@@ -56,7 +57,7 @@ hasValidColumnCount puzzle =
   let
     listOfLengths = map length puzzle
     listOfNonNine = filter (/=9) listOfLengths
-    validity = not $ length listOfNonNine > 0
+    validity = null listOfNonNine
   in
     validity
 
@@ -85,7 +86,7 @@ solveCell (rowNumber, columnNumber) arr =
     box = getBox (rowNumber, columnNumber) arr
     possibilities = getPossibilities row column box
     solvable = if' (length possibilities == 1) True False
-    maybeValue = if' solvable (Just $ possibilities !! 0) Nothing
+    maybeValue = if' solvable (Just $ head possibilities) Nothing
   in
     maybeValue
 
@@ -97,7 +98,7 @@ getRow :: Int -> Puzzle -> Row
 getRow x puzzle = puzzle !! x
 
 getColumn :: Int -> Puzzle -> Column
-getColumn x puzzle = map (!!x) puzzle
+getColumn x = map (!!x)
 
 axisBoxOrigin :: Int -> Int
 axisBoxOrigin rowOrColumn =
@@ -144,7 +145,7 @@ getSolvables arr =
   handleIt Nothing = 0
   makeTuple row column = (row,column, handleIt $ solveCell (row, column) arr)
   in
-  [makeTuple r c | r <- range, c <- range, solveCell (r, c) arr /= Nothing, cellIsZero r c]
+  [makeTuple r c | r <- range, c <- range, Data.Maybe.isJust (solveCell (r, c) arr), cellIsZero r c]
 
 if' :: Bool -> a -> a -> a
 if' True x _ = x
