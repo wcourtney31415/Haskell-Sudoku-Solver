@@ -19,10 +19,7 @@ solvePuzzle puzzle =
     updated :: Puzzle
     updated = foldl replace puzzle solvables
   in
-    if updated == puzzle then
-      updated
-    else
-      solvePuzzle updated
+    if' (updated == puzzle) updated (solvePuzzle updated)
 
 
 fillCell :: RowColumnPair -> Int -> Puzzle -> Puzzle
