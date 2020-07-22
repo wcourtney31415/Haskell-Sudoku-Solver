@@ -1,7 +1,7 @@
 module Puzzle where
 
-import Data.List
-import Data.Maybe
+import           Data.List
+import           Data.Maybe
 
 type Puzzle = [[Int]]
 type RowColumnPair = (Int, Int)
@@ -40,12 +40,12 @@ fillCell (rowNumber, columnNumber) val puzzle =
 elementsInValidRange :: Puzzle -> Bool
 elementsInValidRange puzzle =
   let
-  listOfElements = concat puzzle
-  isInRange x = x `elem` [0..9]
-  validElements = filter isInRange listOfElements
-  elementCount = length listOfElements
-  validElementCount = length validElements
-  validity = (validElementCount >= elementCount)
+    listOfElements = concat puzzle
+    isInRange x = x `elem` [0..9]
+    validElements = filter isInRange listOfElements
+    elementCount = length listOfElements
+    validElementCount = length validElements
+    validity = (validElementCount >= elementCount)
   in
   validity
 
@@ -114,8 +114,8 @@ getBoxOrigin (rowNumber, columnNumber) =
 getCell :: RowColumnPair -> Puzzle -> Int
 getCell (rowNumber, columnNumber) puzzle =
   let
-  row = puzzle !! rowNumber
-  cell = row !! columnNumber
+    row = puzzle !! rowNumber
+    cell = row !! columnNumber
   in
   cell
 
@@ -135,17 +135,17 @@ getBox a@(rowNumber, columnNumber) puzzle =
 
 getSolvables arr =
   let
-  cellIsZero row column =
-    0 == getCell (row, column) arr
-  range = [0..8]
-  handleIt (Just a) = a
-  handleIt Nothing = 0
-  makeTuple row column = (row,column, handleIt $ solveCell (row, column) arr)
+    cellIsZero row column =
+      0 == getCell (row, column) arr
+    range = [0..8]
+    handleIt (Just a) = a
+    handleIt Nothing  = 0
+    makeTuple row column = (row,column, handleIt $ solveCell (row, column) arr)
   in
   [makeTuple r c | r <- range, c <- range, Data.Maybe.isJust (solveCell (r, c) arr), cellIsZero r c]
 
 if' :: Bool -> a -> a -> a
-if' True x _ = x
+if' True x _  = x
 if' False _ y = y
 
 --For Repl convenience.
