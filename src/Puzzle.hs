@@ -9,12 +9,14 @@ type Row = [Int]
 type Column = [Int]
 type Box = [Int]
 type Cell = Int
+type Replacement = (Int, Int, Int)
+type Solvable = (Int, Int, Cell)
 
 solvePuzzle :: Puzzle -> Puzzle
 solvePuzzle puzzle =
   let
     solvables = getSolvables puzzle
-    replace :: Puzzle -> (Int, Int, Int) -> Puzzle
+    replace :: Puzzle -> Replacement -> Puzzle
     replace arr (row,column,val) = fillCell (row,column) val puzzle
     updated :: Puzzle
     updated = foldl replace puzzle solvables
@@ -76,11 +78,11 @@ toPuzzle puzzle =
   maybePuzzle
 
 solveCell :: RowColumnPair -> Puzzle -> Maybe Cell
-solveCell (rowNumber, columnNumber) arr =
+solveCell (rowNumber, columnNumber) puzzle =
   let
-    row = getRow rowNumber arr
-    column = getColumn columnNumber arr
-    box = getBox (rowNumber, columnNumber) arr
+    row = getRow rowNumber puzzle
+    column = getColumn columnNumber puzzle
+    box = getBox (rowNumber, columnNumber) puzzle
     possibilities = getPossibilities row column box
     solvable = if' (length possibilities == 1) True False
     maybeValue = if' solvable (Just $ head possibilities) Nothing
@@ -133,16 +135,18 @@ getBox a@(rowNumber, columnNumber) puzzle =
   in
   result
 
-getSolvables arr =
+getSolvables :: Puzzle -> [Solvable]
+getSolvables puzzle =
   let
     cellIsZero row column =
-      0 == getCell (row, column) arr
+      0 == getCell (row, column) puzzle
     range = [0..8]
     handleIt (Just a) = a
     handleIt Nothing  = 0
-    makeTuple row column = (row,column, handleIt $ solveCell (row, column) arr)
+    getAnswerOrZero row column = (row,column, handleIt $ solveCell (row, column) puzzle)
   in
-  [makeTuple r c | r <- range, c <- range, Data.Maybe.isJust (solveCell (r, c) arr), cellIsZero r c]
+  [getAnswerOrZero r c | r <- range, c <- range
+  , Data.Maybe.isJust (solveCell (r, c) puzzle), cellIsZero r c]
 
 if' :: Bool -> a -> a -> a
 if' True x _  = x
