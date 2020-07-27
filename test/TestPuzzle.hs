@@ -11,7 +11,17 @@ puzzleTests = prepTests "TestPuzzle.hs" tests
 tests =
   [
      ("Puzzle: arrToPuzzle successfully creates puzzle."
-      ,testArrToPuzzle)
+      , testArrToPuzzle)
+     , ("Puzzle: Get back Nothing if prepuzzle has too many rows."
+       , testExcessiveRows)
+     , ("Puzzle: Get back Nothing if prepuzzle has bad row count."
+       , testReturnNothingOnBadRowCount)
+     , ("Puzzle: Get back Nothing if prepuzzle has bad column count."
+       , testReturnNothingOnBadColumnCount)
+     , ("Puzzle: Get back Nothing if prepuzzle has bad column count."
+       , testReturnNothingOnBadColumnCount)
+     , ("Puzzle: Get back Nothing if prepuzzle contains num other than [0..9]."
+       , testReturnNothingOnBadColumnCount)
   ]
 
 validPuzzleSeed =
