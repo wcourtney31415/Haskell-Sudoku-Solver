@@ -11,6 +11,7 @@ type Row = [CellValue]
 type Column = [CellValue]
 type Box = [CellValue]
 type RowColumnPair = (Int, Int)
+type Solution = Int
 
 if' :: Bool -> a -> a -> a
 if' True x _  = x
