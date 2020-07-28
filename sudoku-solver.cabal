@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: dc0571bc82fa258125e0e10f10de4cd97b0e4a7d5c86a7f703d6dc7182cecd66
+-- hash: 254308a7773b39a84a9eeac65f54649cf4739c7918f8d04efa02f74f12462b02
 
 name:           sudoku-solver
 version:        0.1.0.0
@@ -31,6 +31,7 @@ library
       MyTypes
       Puzzle
       PuzzleValidity
+      Quarantine
   other-modules:
       Paths_sudoku_solver
   hs-source-dirs:
